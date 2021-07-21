@@ -1,5 +1,5 @@
-CREATE DATABASE messagely
-CREATE DATABASE messagely_test
+\c messagely
+
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS messages;
 
