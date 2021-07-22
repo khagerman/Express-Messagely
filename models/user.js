@@ -113,21 +113,19 @@ class User {
       `SELECT id, to_username, body, sent_at, read_at, first_name, last_name, phone, username from messages JOIN users ON to_username=username WHERE from_username= $1`,
       [username]
     );
-    let m = result.rows[0];
-    return [
-      {
-        id: m.id,
-        to_user: {
-          username: m.to_username,
-          first_name: m.first_name,
-          last_name: m.last_name,
-          phone: m.phone,
-        },
-        body: m.body,
-        sent_at: m.sent_at,
-        read_at: m.read_at,
+
+    return result.rows.map((m) => ({
+      id: m.id,
+      to_user: {
+        username: m.to_username,
+        first_name: m.first_name,
+        last_name: m.last_name,
+        phone: m.phone,
       },
-    ];
+      body: m.body,
+      sent_at: m.sent_at,
+      read_at: m.read_at,
+    }));
   }
 
   /** Return messages to this user.
@@ -144,21 +142,19 @@ class User {
       `SELECT id, from_username, body, sent_at, read_at, first_name, last_name, phone, username from messages JOIN users ON from_username=username WHERE to_username= $1`,
       [username]
     );
-    let m = result.rows[0];
-    return [
-      {
-        id: m.id,
-        from_user: {
-          username: m.from_username,
-          first_name: m.first_name,
-          last_name: m.last_name,
-          phone: m.phone,
-        },
-        body: m.body,
-        sent_at: m.sent_at,
-        read_at: m.read_at,
+    result.rows;
+    return result.rows.map((m) => ({
+      id: m.id,
+      from_user: {
+        username: m.from_username,
+        first_name: m.first_name,
+        last_name: m.last_name,
+        phone: m.phone,
       },
-    ];
+      body: m.body,
+      sent_at: m.sent_at,
+      read_at: m.read_at,
+    }));
   }
 }
 
